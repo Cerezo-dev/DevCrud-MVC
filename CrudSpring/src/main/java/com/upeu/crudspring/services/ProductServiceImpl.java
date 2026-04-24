@@ -14,26 +14,30 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Producto> listarTodo() {
-        //lista los productos
+        //lista los productos, los parsea a List, para evitar errores
         return (List<Producto>) productoRepository.findAll();
     }
-
-    @Override
-    public Producto obtenerProducto(Long id) {
-        return productoRepository.findById(id).orElse(null);
-    }
-
     @Override
     public Producto crearProducto(Producto producto) {
+        //A productRepository, le aplica el metodo 'save' con el parametro producto
         return productoRepository.save(producto);
     }
 
     @Override
+    public Producto obtenerProducto(Long id) {
+        //retorna el producto por ID o si es nulo, nulo
+        return productoRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Producto actualizarProducto(Producto producto) {
+        //obtiene producto por ID
         Producto productDB = obtenerProducto(producto.getId());
+        //si productBD is null, retorna null
         if (productDB == null) {
             return null;
         }
+        //si no entra en  la condicional, procede a obtner poner el dato con set, y lo obtiene con get
         productDB.setNombre(producto.getNombre());
         productDB.setDescripcion(producto.getDescripcion());
         productDB.setCantidad(producto.getCantidad());
