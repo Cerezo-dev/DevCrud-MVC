@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Productos</title>
+    <title>Lista de Clientes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -10,13 +10,13 @@
 
 <div class="card shadow">
     <div class="card-header bg-primary text-white">
-        <h2 class="mb-0">Mantenimiento de Productos</h2>
+        <h2 class="mb-0">Mantenimiento de Clientes</h2>
     </div>
     <div class="card-body">
 
         <div class="d-flex justify-content-between mb-3">
-            <h4>Lista de Productos</h4>
-            <a th:href="@{/productos/nuevo}" class="btn btn-success">Agregar Nuevo</a>
+            <h4>Lista de Clientes</h4>
+            <a th:href="@{/clientes/nuevo}" class="btn btn-success">Agregar Nuevo</a>
         </div>
 
         <table class="table table-hover table-bordered">
@@ -24,9 +24,10 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Ciudad</th>
                 <th>Fecha Creación</th>
                 <th>Estado</th>
                 <th>Acciones</th>
@@ -34,34 +35,35 @@
             </thead>
             <tbody>
 
-            <tr th:each="p : ${productos}">
-                <td th:text="${p.id}">1</td>
-                <td th:text="${p.nombre}">Producto</td>
-                <td th:text="${p.descripcion}">Descripción</td>
-                <td th:text="${p.cantidad}">0</td>
-                <td th:text="${'S/ ' + p.precio}">0.00</td>
-                <td th:text="${p.created}">01/01/2026</td>
+            <tr th:each="c : ${clientes}">
+                <td th:text="${c.id}">1</td>
+                <td th:text="${c.nombre}">Nombre</td>
+                <td th:text="${c.apellido}">Apellido</td>
+                <td th:text="${c.email}">email@example.com</td>
+                <td th:text="${c.telefono}">999999999</td>
+                <td th:text="${c.ciudad}">Ciudad</td>
+                <td th:text="${c.created}">01/01/2026</td>
                 <td>
-                    <span th:if="${p.disponible}" class="badge bg-success">Disponible</span>
-                    <span th:unless="${p.disponible}" class="badge bg-danger">Agotado</span>
+                    <span th:if="${c.activo}" class="badge bg-success">Activo</span>
+                    <span th:unless="${c.activo}" class="badge bg-danger">Inactivo</span>
                 </td>
                 <td>
-                    <a th:href="@{/productos/editar/{id}(id=${p.id})}" class="btn btn-warning btn-sm"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a th:href="@{/clientes/editar/{id}(id=${c.id})}" class="btn btn-warning btn-sm"><i class="fa-regular fa-pen-to-square"></i></a>
 
-                    <a th:href="@{/productos/eliminar/{id}(id=${p.id})}"
+                    <a th:href="@{/clientes/eliminar/{id}(id=${c.id})}"
                        class="btn btn-danger btn-sm"
-                       onclick="return confirm('¿Estás seguro de eliminar este producto?')"><i class="fa-solid fa-trash-can"></i></a>
+                       onclick="return confirm('¿Estás seguro de eliminar este cliente?')"><i class="fa-solid fa-trash-can"></i></a>
                 </td>
             </tr>
-            <tr th:if="${#lists.isEmpty(productos)}">
-                <td colspan="7" class="text-center">No hay productos registrados.</td>
+            <tr th:if="${#lists.isEmpty(clientes)}">
+                <td colspan="9" class="text-center">No hay clientes registrados.</td>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="d-flex justify-content-center gap-2">
         <a class="btn  btn-info mb-4" href="/"> <i class="fa-solid fa-home"></i> Home </a>
-        <a class="btn btn-secondary mb-4" href="/clientes/listar"> <i class="fa-solid fa-users"></i> Clientes </a>
+        <a class="btn btn-secondary mb-4" href="/productos/listar"> <i class="fa-solid fa-box"></i> Productos </a>
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn btn-outline-danger">Cerrar Sesión</button>
         </form>
@@ -72,3 +74,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
